@@ -9,6 +9,10 @@
 
 ;; we have learned several new functions that have incredible use.
 
+;; some of this stuff is straight up ripped off notes from freely available articles.
+;; other bits are from recollection. either way, it is all organized in order to organize my own thoughts.
+;; in this way, perhaps it is actually a useful flow of information.
+
 ;; `car' or `first' returns the first `atom' out of a `list'
 
 ;; `cdr' or `rest' returns the `list' containing all atoms after the first
@@ -16,7 +20,8 @@
 ;; `nthcdr' takes an integer argument and a list and returns the nth `cdr' function on that list
 
 ;; `nth' takes an integer argument and a list and returns the car of the nth cdr. in other words,
-;; `nth' returns the car of the nth entry starting from n=0.
+;; `nth' returns the car of the nth entry starting from n=0
+
 
 ;; `subseq' takes a list as an arguments and then two positive integer values representing the
 ;; entries in the list. for example, (subseq '(1 2 3 4) 0 2) will return (1 2). the 0 and 2
@@ -96,14 +101,40 @@
 
 ;; in the beginning, these names were mnemonic, at least to the folks implementing the first Lisp on an IBM 704. but even then they were just lifed
 ;; from the assembly mnemonics used to implement the operations. however, it's not all bad that these names are somewhat meaningless--when
-;; considering individual cons cells, it's best to think of them simply as an arbitrary pair of values without any particular semantics. thus:
+;; considering individual cons cells, it's best to think of them as an arbitrary pair of values without any particular semantics. thus:
 
 (car (cons 1 2)) ; returns 1
 (cdr (cons 1 2)) ; returns 2
 
 
+;; both car and cdr are also `setf-able' spaces. given an existing cons cell, it's possible to assign a new value to either of its values.
+
+(defparameter *cons* (cons 1 2))
+*cons*
+(setf (car *cons*) 10)
+*cons*
+(setf (cdr *cons*) 20)
+*cons*
+
+;; because the values in a cons cell can be references to any kind of object, you can build larger structures out of cons cells by linking them
+;; together. lists are built by linking together cons cells in a chain. the elements of the list are held in the cars of the cons cells while the
+;; links to subsequent cons cells are held in the cdrs. the last cell in the chain has a cdr of nil, which represents the empty list as well as
+;; the boolean value `false'.
+
+;; this arrangement is called a `singly_linked_list' and is found in other languages. lisp provides exceptional support for this simple data type.
+
+;; when someone says that a particular value is a `list' what is really meant is that the value is either nil or a reference to a cons cell.
+;; the car of the cons cell is the first item of the list, and the cdr is a reference to another list, that is, another cons cell or nil,
+;; containing the remaining elements. the lisp printer understands this convention and prints such chains of cons cells as parenthesized lists
+;; rather than as dotted pairs.
 
 
+;; the following function will sum together the entries of two 2x2 matrices of the form:
+
+;;            matrix1 = ((a1-1 a1-2) (a2-1 a2-2))
+;;            matrix2 = ((b1-1 b1-2) (b2-1 b2-2))
+
+;;            matrix1 + matrix2 = (([a1-1 + b1-1] [a1-2 + b1-2]) ([a2-1 + b2-1] [a2-2 + b2-2]))
 
 (defun add-2x2 (matrix1 matrix2)
   (list
@@ -115,4 +146,10 @@
      (car (cdr (car matrix1)))
      (car (cdr (car matrix2)))))
    (list
-    (+ (cdr matrix1)
+    (+
+     (car (car (cdr matrix1)))
+     (car (car (cdr matrix2))))
+    (+
+     (car (cdr (car (cdr matrix1))))
+     (car (cdr (car (cdr matrix2))))))))
+       
