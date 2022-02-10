@@ -16,7 +16,7 @@
 ;; `nthcdr' takes an integer argument and a list and returns the nth `cdr' function on that list
 
 ;; `nth' takes an integer argument and a list and returns the car of the nth cdr. in other words,
-;; `nth' returns the nth atom.
+;; `nth' returns the car of the nth entry starting from n=0.
 
 ;; `subseq' takes a list as an arguments and then two positive integer values representing the
 ;; entries in the list. for example, (subseq '(1 2 3 4) 0 2) will return (1 2). the 0 and 2
