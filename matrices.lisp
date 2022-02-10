@@ -8,7 +8,7 @@
 ;; 20220209_1921
 
 ;; we have learned several new functions that have incredible use.
-
+;;
 ;; some of this stuff is straight up ripped off notes from freely available articles.
 ;; other bits are from recollection. either way, it is all organized in order to organize my own thoughts.
 ;; in this way, perhaps it is actually a useful flow of information.
