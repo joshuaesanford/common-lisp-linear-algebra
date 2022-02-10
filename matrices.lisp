@@ -8,7 +8,7 @@
 ;; 20220209_1921
 
 ;; we have learned several new functions that have incredible use.
-;;
+
 ;; some of this stuff is straight up ripped off notes from freely available articles.
 ;; other bits are from recollection. either way, it is all organized in order to organize my own thoughts.
 ;; in this way, perhaps it is actually a useful flow of information.
@@ -127,6 +127,45 @@
 ;; the car of the cons cell is the first item of the list, and the cdr is a reference to another list, that is, another cons cell or nil,
 ;; containing the remaining elements. the lisp printer understands this convention and prints such chains of cons cells as parenthesized lists
 ;; rather than as dotted pairs.
+
+(cons 1 nil) ; returns (1)
+(cons 1 (cons 2 nil)) ; returns (1 2)
+(cons 1 (cons 2 (cons 3 nil))) ; returns (1 2 3)
+
+
+;; when talking about structures built out of cons cells, a few diagrams can be a big help. box-and-arrow diagrams
+;; represent cons cells as a pair of boxes. we can approximate the boxes with brackets and pipes:
+
+;;      [ | ]
+
+;; the box on the left represents the car, and the box on the right is the cdr. the values stored in a particular
+;; cons cell are either drawn in the appropriate box or represented by an arrow from the box to a representation
+;; of the referenced value. for instance, the list (1 2 3), which consists of three cons cells linked together by
+;; their cdrs, would be diagrammed like this:
+
+;;    [ 1 |  ] --> [ 2 |  ] --> [ 3 | nil ]
+
+
+;; you normally don't have to work with individual cons cells with working with lists. the functions that create
+;; and manipulate lists take care of that for you.
+
+;; for example, the `list' function builds cons cells under the covers for you and links them together; the
+;; following list expressions are equivalent to the previous cons expressions.
+
+(list 1) ; evaluates to (1)
+(list 1 2) ; evaluates to (1 2)
+(list 1 2 3) ; evaluates to (1 2 3)
+
+;; once again, `first' and `rest' are synonyms for `car' and `cdr'
+
+;; because cons cells can hold any kind of values, so can lists.
+;; cons cells can hold lists as cars while still pointing to cdrs.
+
+(list "foo" (list 1 2) 10) ; evaluates to ("foo" (1 2) 10)
+
+;; because lists can have other lists as elements, you can also use them to represent trees of arbitrary depth
+;; and complexity. as such, they make excellent representations for any heterogeneous, hierarchical data.
+
 
 
 ;; the following function will sum together the entries of two 2x2 matrices of the form:
